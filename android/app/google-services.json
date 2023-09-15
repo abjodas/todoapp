@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "321924781657",
+    "project_id": "fireapp-9a94c",
+    "storage_bucket": "fireapp-9a94c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321924781657:android:da225e37c8e8969fae8348",
+        "android_client_info": {
+          "package_name": "com.fireapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY04b8HV4NFtQPIU8K2Vxe_X6LG-7tPDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
