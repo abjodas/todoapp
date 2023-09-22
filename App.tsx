@@ -6,8 +6,12 @@ import database from '@react-native-firebase/database';
 
 
 const App = () => {
-  const [data, setData] = useState(null);
+  const [list, setList] = useState(null);
   const [text, onChangeText] = useState("")
+  const userId = 10
+
+  const newReference = database().ref('/todo').push();
+
 
   useEffect(() => {
     getDatabase();
@@ -15,13 +19,22 @@ const App = () => {
 
   const getDatabase = async () => {
     try {
-      //const data = await firestore().collection("testing").doc("h2ncdP3ixhScN0m1G6tm").get();
-      //console.log(data._data.hobby);
-      const data = await database().ref('/users/1').once("value");
+      const data = await database().ref(`todo`).once("value");
       console.log(data.val())
-      setData(data.val());
+      setList(data.val());
     } catch (err) {
       console.log(err);
+    }
+  }
+
+
+  const handleAddData = async () => {
+    try {
+      const response = database().ref(`/todo/0`)
+        .set({ value: text })
+      console.log("Response" + response)
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -29,9 +42,27 @@ const App = () => {
     <View style={styles.container}>
       <View style={[styles.container, { alignItems: 'center' }]}>
         <TextInput style={styles.inputBox} placeholder={"Enter Text"} onChangeText={onChangeText} />
-        <TouchableOpacity style={styles.addButton} >
+        <TouchableOpacity style={styles.addButton} onPress={() => handleAddData()} >
           <Text style={{ color: "white" }}>Add</Text>
         </TouchableOpacity>
+
+
+        <View style={styles.cardContainer}>
+          <Text style={{ marginVertical: 10, color: "black", fontWeight: "bold", fontSize: 17 }}>Todo List</Text>
+
+          <FlatList
+            data={list}
+            renderItem={item => {
+              console.log(item.item.value)
+              return (
+                <View style={styles.card}>
+                  <Text>{item.item.value}</Text>
+                </View>
+              )
+            }}
+          />
+        </View>
+
       </View>
     </View>
   );
@@ -59,5 +90,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: "center",
     borderRadius: 5
+  },
+  cardContainer: {
+    marginVertical: 20
+  },
+  card: {
+    backgroundColor: "white",
+    width: width - 20,
+    padding: 10,
+    justifyContent: "center",
+    borderRadius: 10
   }
 });
